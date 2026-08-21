@@ -1,3 +1,24 @@
+function openBirthday() {
+
+    const opening = document.getElementById("secretOpening");
+
+    // Make the opening fade away
+    opening.classList.add("opening-hidden");
+
+    // Celebrate 🎉
+    createConfetti();
+
+    // Reveal the birthday message
+    setTimeout(() => {
+
+        const message = document.getElementById("message");
+
+        message.scrollIntoView({
+            behavior: "smooth"
+        });
+
+    }, 700);
+}
 function showMessage() {
     const message = document.getElementById("message");
 
