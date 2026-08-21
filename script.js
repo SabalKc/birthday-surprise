@@ -1,271 +1,57 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+function showMessage() {
+    const message = document.getElementById("message");
+
+    message.scrollIntoView({
+        behavior: "smooth"
+    });
+
+    createConfetti();
 }
 
-html {
-    scroll-behavior: smooth;
-}
 
-body {
-    font-family: Georgia, "Times New Roman", serif;
-    background: linear-gradient(135deg, #fff0f6, #ffe4ec, #fff7e6);
-    color: #4a2633;
-    overflow-x: hidden;
-}
+// 🎉 Birthday confetti
+function createConfetti() {
 
-/* Floating background hearts */
+    const emojis = ["🎉", "🎊", "💖", "✨", "🥳", "🌸", "🎂"];
 
-.hearts::before,
-.hearts::after {
-    content: "♥  ✦  ♥  ✧  ♥  ✦  ♥";
-    position: fixed;
-    left: 0;
-    width: 100%;
-    color: rgba(255, 105, 150, 0.15);
-    font-size: 28px;
-    letter-spacing: 35px;
-    pointer-events: none;
-    z-index: 0;
-    animation: floatHearts 12s linear infinite;
-}
+    for (let i = 0; i < 45; i++) {
 
-.hearts::before {
-    top: 5%;
-}
+        const confetti = document.createElement("div");
 
-.hearts::after {
-    top: 60%;
-    animation-delay: 5s;
-}
+        confetti.textContent =
+            emojis[Math.floor(Math.random() * emojis.length)];
 
-@keyframes floatHearts {
-    from {
-        transform: translateY(40px);
-    }
+        confetti.style.position = "fixed";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.top = "-30px";
+        confetti.style.fontSize = (15 + Math.random() * 20) + "px";
+        confetti.style.zIndex = "9999";
+        confetti.style.pointerEvents = "none";
 
-    to {
-        transform: translateY(-100px);
-    }
-}
+        document.body.appendChild(confetti);
 
-/* Main container */
+        const duration = 2500 + Math.random() * 2500;
 
-main {
-    position: relative;
-    z-index: 1;
-}
+        confetti.animate(
+            [
+                {
+                    transform: "translateY(0) rotate(0deg)",
+                    opacity: 1
+                },
+                {
+                    transform:
+                        `translateY(110vh) rotate(${360 + Math.random() * 720}deg)`,
+                    opacity: 0
+                }
+            ],
+            {
+                duration: duration,
+                easing: "cubic-bezier(.2,.8,.3,1)"
+            }
+        );
 
-/* Hero */
-
-.hero {
-    min-height: 100vh;
-    padding: 60px 25px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background:
-        radial-gradient(circle at top, rgba(255,255,255,0.9), transparent 55%);
-}
-
-.small-text {
-    font-size: 15px;
-    color: #a45b73;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-}
-
-.hero h1 {
-    font-size: clamp(38px, 9vw, 75px);
-    line-height: 1.15;
-    color: #d83b6b;
-    text-shadow: 0 5px 20px rgba(216, 59, 107, 0.2);
-    margin-bottom: 25px;
-}
-
-.subtitle {
-    max-width: 600px;
-    font-size: 18px;
-    line-height: 1.7;
-    color: #684454;
-    margin-bottom: 35px;
-}
-
-/* Button */
-
-button {
-    border: none;
-    padding: 16px 28px;
-    border-radius: 50px;
-    background: linear-gradient(135deg, #e83e73, #ff7b9c);
-    color: white;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 10px 30px rgba(216, 59, 107, 0.3);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-button:hover {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 15px 35px rgba(216, 59, 107, 0.4);
-}
-
-button:active {
-    transform: scale(0.96);
-}
-
-/* Sections */
-
-.message-section,
-.gallery-section,
-.personal-note {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 90px 25px;
-}
-
-.message-section h2,
-.gallery-section h2,
-.personal-note h2 {
-    text-align: center;
-    color: #d83b6b;
-    font-size: 34px;
-    margin-bottom: 35px;
-}
-
-.message-section p {
-    background: rgba(255, 255, 255, 0.75);
-    padding: 22px;
-    margin: 18px 0;
-    border-radius: 20px;
-    line-height: 1.8;
-    font-size: 17px;
-    box-shadow: 0 8px 25px rgba(150, 60, 90, 0.08);
-    border: 1px solid rgba(255, 150, 180, 0.25);
-}
-
-/* Gallery */
-
-.gallery-subtitle {
-    text-align: center;
-    margin-top: -20px;
-    margin-bottom: 35px;
-    color: #805465;
-}
-
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-}
-
-.gallery img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 22px;
-    box-shadow: 0 10px 30px rgba(80, 30, 50, 0.18);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.gallery img:hover {
-    transform: scale(1.03) rotate(1deg);
-    box-shadow: 0 15px 35px rgba(80, 30, 50, 0.25);
-}
-
-/* Personal note */
-
-.note {
-    background: rgba(255, 255, 255, 0.82);
-    padding: 35px 28px;
-    border-radius: 25px;
-    box-shadow: 0 15px 40px rgba(120, 50, 80, 0.12);
-    border-left: 5px solid #ed6b91;
-}
-
-.note p {
-    font-size: 18px;
-    line-height: 1.9;
-    margin-bottom: 22px;
-}
-
-.big-ending {
-    color: #d83b6b;
-    font-size: 23px !important;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 30px;
-}
-
-/* Footer */
-
-footer {
-    text-align: center;
-    padding: 60px 25px 80px;
-    background: rgba(255, 255, 255, 0.5);
-}
-
-footer h3 {
-    color: #d83b6b;
-    font-size: 22px;
-    margin: 15px 0;
-}
-
-footer p {
-    color: #805465;
-    line-height: 1.6;
-}
-
-.secret {
-    font-size: 13px;
-    opacity: 0.7;
-}
-
-/* Mobile */
-
-@media (max-width: 600px) {
-
-    .hero {
-        padding: 40px 20px;
-    }
-
-    .hero h1 {
-        font-size: 42px;
-    }
-
-    .subtitle {
-        font-size: 16px;
-    }
-
-    .message-section,
-    .gallery-section,
-    .personal-note {
-        padding: 65px 18px;
-    }
-
-    .message-section h2,
-    .gallery-section h2,
-    .personal-note h2 {
-        font-size: 30px;
-    }
-
-    .gallery {
-        grid-template-columns: 1fr;
-    }
-
-    .gallery img {
-        height: 430px;
-    }
-
-    .note {
-        padding: 28px 22px;
-    }
-
-    .note p {
-        font-size: 17px;
+        setTimeout(() => {
+            confetti.remove();
+        }, duration);
     }
 }
